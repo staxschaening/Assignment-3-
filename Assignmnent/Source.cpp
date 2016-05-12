@@ -50,6 +50,7 @@ int main()
 	Reddudebluetx.loadFromFile("Enemy.png");
 	sf::Sprite Reddudebluespr(Reddudebluetx);
 	Reddudebluespr.setPosition(4500, 400);
+	//collisions
 
 	//loading Enemy2
 	sf::Texture Yellowdudebluetx;
