@@ -22,6 +22,7 @@ void Inputer(sf::Sprite &player);
 
 int main()
 {
+	//this is the window screen.
 	sf::RenderWindow window(sf::VideoMode(800, 800), "GreenDude Explores");
 	//sf::CircleShape shape(100.f);
 	//shape.setFillColor(sf::Color::Green);
@@ -40,7 +41,7 @@ int main()
 	sf::Sprite Greendudespr(GreenDudetx);
 	Greendudespr.setPosition(100, 100);
 
-	// loading texture wall
+	// loading texture wall, map
 
 	sf::Texture wallBrickT;
 	wallBrickT.loadFromFile( "WallBrick.png");
@@ -211,24 +212,13 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	}
 
 
 	
 
 
-
+	//
 	//
 	//Our window loop
 	//
@@ -258,7 +248,7 @@ int main()
 
 		//Collision check
 		//WALLS
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 130; i++) {
 			//(wallBrick[i]);
 
 			if ((abs((int)Greendudespr.getPosition().x - (int)wallBrickspr[i].getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)wallBrickspr[i].getGlobalBounds().width) &&
@@ -289,7 +279,9 @@ int main()
 		//
 		//Draws go here
 		//window.draw(shape);
+		//player being drawn in 
 		window.draw(Greendudespr);
+		//wall textures being drawn in
 		window.draw(wallBrickspr[0]);
 		window.draw(wallBrickspr[1]);
 		window.draw(wallBrickspr[2]);
@@ -427,6 +419,8 @@ int main()
 
 	return 0;
 }
+
+
 
 void Inputer(sf::Sprite &player) {
 
