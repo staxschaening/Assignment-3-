@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 //#include "Menu.h"
+#include "AnimatedFire.h"
 
 
 
@@ -13,16 +14,9 @@ void Inputer(sf::Sprite & player);
 
 
 
-class enemy
-{
-public:
 
 
-
-
-};
-
-/* part of the menu system could not implemented and isnt complete however the class diagram will clarify the process.
+/* part of the menu system could not implemented however the class diagram will clarify.
 void ();
 
 
@@ -111,6 +105,22 @@ int main()
 
 	//
 	//Loading textures, sprites, walls, player & Enemys
+
+
+	sf::Texture fire1Texture;
+	fire1Texture.loadFromFile("Firesp.png");
+
+	//reference pointer to the texture
+	sf::Texture & ref_fire1Texture = fire1Texture;
+
+	//GH Animated Sprite
+	FireSprite frSpriteFire(ref_fire1Texture);
+	frSpriteFire.sprite.setPosition(200.0f, 200.0f);
+
+	sf::Clock clock1;
+	sf::Time elapsed1;
+	float timeSinceLastFrameAsFloat = 0.0f;
+	float lastTimeAsFloat = 0.0f;
 
 	//loading Enemy1
 	sf::Texture Reddudebluetx;
@@ -376,7 +386,8 @@ int main()
 
 
 
-
+		//Animated sprite updates (change frames)
+		frSpriteFire.Update(timeSinceLastFrameAsFloat);
 
 
 
@@ -401,7 +412,8 @@ int main()
 		window.draw(Reddudebluespr);
 		//Enemy2 is drawn
 		window.draw(Yellowdudebluespr);
-
+		//Drawing animated fire
+		window.draw(frSpriteFire.sprite);
 
 		//wall textures being drawn in
 		window.draw(wallBrickspr[0]);
@@ -579,5 +591,43 @@ void Inputer(sf::Sprite &player) {
 		if (pos.y < boundry[3]) player.move(0, velocity);
 
 	}
+
+}
+
+FireSprite::FireSprite(sf::Texture & myTexture) { //no void for contstrctpr
+	currentFrame = 3;
+	timeSinceLastChange = 0.25f;
+
+	sprite.setTexture(myTexture);
+	sprite.setTextureRect(sf::IntRect(64 * currentFrame, 0, 64, 64));
+	sprite.setTextureRect(sf::IntRect(64 * currentFrame, 0, 64, 150));
+
+
+
+
+}
+
+void FireSprite::Update(float timeSinceLastFrame) {
+
+	timeSinceLastChange += timeSinceLastFrame;
+	if (timeSinceLastChange >= 1.0f) {
+
+		std::cout << "timer hits 0.25 seconds\n";
+		timeSinceLastChange = 0.25f; //reset the timer
+
+									 //increment the frame counter
+		if (currentFrame >= 4) {
+			currentFrame = 0;
+		}
+		else {
+			currentFrame++;
+		}
+
+		//change the section of the texture
+		sprite.setTextureRect(sf::IntRect(64 * currentFrame, 0, 64, 64));
+
+	}
+
+
 
 }

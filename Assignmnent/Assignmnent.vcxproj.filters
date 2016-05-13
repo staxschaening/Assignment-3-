@@ -26,5 +26,8 @@
     <ClInclude Include="Menuh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Animated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
