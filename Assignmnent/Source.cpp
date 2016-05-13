@@ -115,7 +115,7 @@ int main()
 
 	//GH Animated Sprite
 	FireSprite frSpriteFire(ref_fire1Texture);
-	frSpriteFire.sprite.setPosition(200.0f, 200.0f);
+	frSpriteFire.sprite.setPosition(200.0f, 600.0f);
 
 	sf::Clock clock1;
 	sf::Time elapsed1;
@@ -127,6 +127,12 @@ int main()
 	Reddudebluetx.loadFromFile("Enemy.png");
 	sf::Sprite Reddudebluespr(Reddudebluetx);
 	Reddudebluespr.setPosition(4500, 400);
+
+	//loading Gameobjective item
+	sf::Texture Finishgametx;
+	Finishgametx.loadFromFile("Finished.png");
+	sf::Sprite Finishspr(Finishgametx);
+	Finishspr.setPosition(4700, 600);
 
 	//loading Enemy2
 	sf::Texture Yellowdudebluetx;
@@ -142,7 +148,7 @@ int main()
 	Greendudespr.setPosition(100, 100);
 
 	// loading texture wall, map
-	// looping and creating more wallbricks
+	// array looping and creating more wallbricks
 	sf::Texture wallBrickT;
 	wallBrickT.loadFromFile("WallBrick.png");
 	sf::Sprite wallBrickspr[132];
@@ -320,22 +326,13 @@ int main()
 
 		}
 
-
-
-
-
-
-
 		// store player position for collision
 		sf::Vector2f playerWasHere = Greendudespr.getPosition();
 
 		// initialising player
 		Inputer(Greendudespr);
 
-
-
-
-		//Collision check
+		//Collision List
 		//WALLS
 		for (int i = 0; i < 130; i++) {
 			//(wallBrick[i]);
@@ -354,7 +351,7 @@ int main()
 		if ((abs((int)Greendudespr.getPosition().x - (int)Reddudebluespr.getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Reddudebluespr.getGlobalBounds().width) &&
 			(abs((int)Greendudespr.getPosition().y - (int)Reddudebluespr.getPosition().y) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Reddudebluespr.getGlobalBounds().height)))) {
 
-			std::cout << "Wall1 i and Player collide\n";
+			std::cout << "Collieded with enemy 1 collided\n";
 
 			//If there was a collision, undo player movement;
 			Greendudespr.setPosition(playerWasHere);
@@ -374,30 +371,36 @@ int main()
 			Greendudespr.setPosition(100, 100);
 		}
 
+		if ((abs((int)Greendudespr.getPosition().x - (int)Finishspr.getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Finishspr.getGlobalBounds().width) &&
+			(abs((int)Greendudespr.getPosition().y - (int)Finishspr.getPosition().y) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Finishspr.getGlobalBounds().height)))) {
 
+			std::cout << "Collided with game objective item \n";
+
+			//If there was a collision, undo player movement;
+			Greendudespr.setPosition(playerWasHere);
+			//game closes once player hits finished item 
+			std::cout << "Goal has been reached, please click on the output console and the press enter to close game.\n";
+			system("Pause");
+			window.close();
+		}
+		// collision for fire
+		if ((abs((int)Greendudespr.getPosition().x - (int)frSpriteFire.sprite.getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)frSpriteFire.sprite.getGlobalBounds().width) &&
+			(abs((int)Greendudespr.getPosition().y - (int)frSpriteFire.sprite.getPosition().y) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)frSpriteFire.sprite.getGlobalBounds().height)))) {
+
+			std::cout << "Collided with enemy 2 \n";
+
+			//If there was a collision, undo player movement;
+			Greendudespr.setPosition(playerWasHere);
+			//game restarts when player touches enemy
+			Greendudespr.setPosition(100, 100);
+		}
 		//view = window.getView();
 		view.setCenter(Greendudespr.getPosition().x, Greendudespr.getPosition().y);
 		window.setView(view);
 
 
-
-
-
-
-
-
 		//Animated sprite updates (change frames)
 		frSpriteFire.Update(timeSinceLastFrameAsFloat);
-
-
-
-
-
-
-
-
-
-
 
 		//
 		//Rendering
@@ -414,6 +417,8 @@ int main()
 		window.draw(Yellowdudebluespr);
 		//Drawing animated fire
 		window.draw(frSpriteFire.sprite);
+		//Drawing game finish
+		window.draw(Finishspr);
 
 		//wall textures being drawn in
 		window.draw(wallBrickspr[0]);
