@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+
+
 void Inputer(sf::Sprite & player);
 
 
@@ -10,7 +12,14 @@ void Inputer(sf::Sprite & player);
 
 
 
+class enemy
+{
+public:
 
+
+
+
+};
 
 
 
@@ -50,13 +59,12 @@ int main()
 	Reddudebluetx.loadFromFile("Enemy.png");
 	sf::Sprite Reddudebluespr(Reddudebluetx);
 	Reddudebluespr.setPosition(4500, 400);
-	//collisions
 
 	//loading Enemy2
 	sf::Texture Yellowdudebluetx;
 	Yellowdudebluetx.loadFromFile("Yellowen.png");
 	sf::Sprite Yellowdudebluespr(Yellowdudebluetx);
-	Yellowdudebluespr.setPosition(1500, 400);
+	Yellowdudebluespr.setPosition(850, 400);
 
 
 	//loading greendude.
@@ -272,7 +280,26 @@ int main()
 			}
 		}
 
+		// collision for enemy 1
+		if ((abs((int)Greendudespr.getPosition().x - (int)Reddudebluespr.getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Reddudebluespr.getGlobalBounds().width) &&
+			(abs((int)Greendudespr.getPosition().y - (int)Reddudebluespr.getPosition().y) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Reddudebluespr.getGlobalBounds().height)))) {
 
+			std::cout << "Wall1 i and Player collide\n";
+
+			//If there was a collision, undo player movement;
+			Greendudespr.setPosition(playerWasHere);
+		}
+
+		// collision for enemy 2
+		if ((abs((int)Greendudespr.getPosition().x - (int)Yellowdudebluespr.getPosition().x) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Yellowdudebluespr.getGlobalBounds().width) &&
+			(abs((int)Greendudespr.getPosition().y - (int)Yellowdudebluespr.getPosition().y) * 2 < ((int)Greendudespr.getGlobalBounds().width + (int)Yellowdudebluespr.getGlobalBounds().height)))) {
+
+			std::cout << "Collided with enemy 2 \n";
+
+			//If there was a collision, undo player movement;
+			Greendudespr.setPosition(playerWasHere);
+
+		}
 
 		//view = window.getView();
 		view.setCenter(Greendudespr.getPosition().x, Greendudespr.getPosition().y);
@@ -343,7 +370,6 @@ int main()
 		window.draw(wallBrickspr[41]);
 		window.draw(wallBrickspr[42]);
 		window.draw(wallBrickspr[43]);
-
 		window.draw(wallBrickspr[44]);
 		window.draw(wallBrickspr[45]);
 		window.draw(wallBrickspr[46]);
