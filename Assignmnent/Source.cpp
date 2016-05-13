@@ -634,5 +634,5 @@ void FireSprite::Update(float timeSinceLastFrame) {
 	}
 
 
-
+	// didnt have enough time to finish up the asssignment see post mordem document. 
 }
